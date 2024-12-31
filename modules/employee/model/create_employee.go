@@ -9,12 +9,15 @@ type Response struct {
 }
 
 type Employee struct {
+	Id        int
 	Username  string
+	Dob       time.Time
 	Email     string
 	Phone     string
 	Password  string
 	Position  string
-	HiredDate time.Time
-	Dob       time.Time
 	Salary    float32
+	HiredDate time.Time
+	CreatedAt time.Time
+	UpdatedAt time.Time
 }

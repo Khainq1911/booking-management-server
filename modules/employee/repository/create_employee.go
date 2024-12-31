@@ -9,17 +9,18 @@ import (
 
 type EmployeeStorage interface {
 	CreateEmployeeRepo(ctx context.Context, newEmployee model.Employee) error
+	ListEmployeeRepo(ctx context.Context) ([]model.Employee, error)
 }
 
-type postgresqlStorage struct {
-	db *gorm.DB
+type employeeStorage struct {
+	sql *gorm.DB
 }
 
 func NewMySQLStorage(db *gorm.DB) EmployeeStorage {
-	return &postgresqlStorage{db: db}
+	return &employeeStorage{sql: db}
 }
 
-func (db *postgresqlStorage) CreateEmployeeRepo(ctx context.Context, newEmployee model.Employee) error {
-	result := db.db.Create(&newEmployee)
+func (db *employeeStorage) CreateEmployeeRepo(ctx context.Context, newEmployee model.Employee) error {
+	result := db.sql.Select("Username", "Email", "Phone", "Password", "Position", "HiredDate", "Dob", "Salary").Create(&newEmployee)
 	return result.Error
 }

@@ -14,4 +14,5 @@ type EmployeeApi struct {
 func (api *EmployeeApi) SetupRouter() {
 	api.Echo.POST("/employee", api.EmployeeHandler.CreateEmployee)
 	api.Echo.GET("/employee", api.EmployeeHandler.ListEmployee)
+	api.Echo.PUT("/employee/:id", api.EmployeeHandler.UpdateEmployee)
 }

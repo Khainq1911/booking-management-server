@@ -3,9 +3,8 @@ package main
 import (
 	"fmt"
 	"log"
-	"manage-system-server/modules/employee/handler"
-	"manage-system-server/modules/employee/repository"
-	"manage-system-server/router"
+	"manage-system-server/api/router"
+
 	"net/http"
 	"os"
 
@@ -46,16 +45,7 @@ func main() {
 	}
 	fmt.Println("Connected to the database successfully:", db)
 
-	employeeDb := handler.EmployeeRepo{
-		Repo: repository.NewMySQLStorage(db),
-	}
-
-	employeeApi := router.EmployeeApi{
-		Echo:            e,
-		EmployeeHandler: employeeDb,
-	}
-
-	employeeApi.SetupRouter()
+	router.SetUp(db, e)
 
 	e.GET("/", func(c echo.Context) error {
 		return c.String(http.StatusOK, "Hello, World!")

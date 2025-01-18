@@ -15,5 +15,5 @@ func NewEmployeeRouter(db *gorm.DB, echo *echo.Group) {
 	}
 	echo.GET("/employee", ec.ListEmployee)
 	echo.POST("/employee", ec.CreateEmployee)
-	echo.PUT("/employee/:id", ec.CreateEmployee)
+	echo.PUT("/employee/:id", ec.UpdateEmployee)
 }

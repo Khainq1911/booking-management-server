@@ -10,6 +10,7 @@ import (
 
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -24,6 +25,7 @@ type DB struct {
 
 func main() {
 	e := echo.New()
+	e.Use(middleware.CORS())
 	err := godotenv.Load()
 	if err != nil {
 		log.Fatal("Error loading .env file")

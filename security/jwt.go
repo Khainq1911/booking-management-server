@@ -10,7 +10,7 @@ import (
 func GenerateToken(username string, role string) (string, error) {
 	claims := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"sub": username,
-		"aud": role,
+		"role": role,
 		"exp": time.Now().Add(2 * time.Hour).Unix(),
 		"iat": time.Now().Unix(),
 	})

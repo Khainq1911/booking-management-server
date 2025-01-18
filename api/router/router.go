@@ -9,4 +9,5 @@ func SetUp(db *gorm.DB, e *echo.Echo) {
 	publicRoutes := e.Group("")
 	NewEmployeeRouter(db, publicRoutes)
 	NewAuthRouter(db, publicRoutes)
+	NewTyperoomRouter(db, publicRoutes)
 }

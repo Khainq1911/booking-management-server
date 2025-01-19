@@ -32,15 +32,15 @@ func (db *typeroomStorage) ListTyperoomRepo(ctx context.Context) ([]model.Typero
 	return data, nil
 }
 
-func (db *typeroomStorage) AddTyperoomRepo(ctx context.Context, createData model.CreateTyperoom) error {
-	if err := db.Sql.Create(&createData).Error; err != nil {
+func (db *typeroomStorage) AddTyperoomRepo(ctx context.Context, payload model.CreateTyperoom) error {
+	if err := db.Sql.Create(&payload).Error; err != nil {
 		return err
 	}
 	return nil
 }
 
-func (db *typeroomStorage) UpdateTyperoomRepo(ctx context.Context, id int, updateData model.CreateTyperoom) (int64, error) {
-	result := db.Sql.Where("id = ?", id).Updates(&updateData)
+func (db *typeroomStorage) UpdateTyperoomRepo(ctx context.Context, id int, payload model.CreateTyperoom) (int64, error) {
+	result := db.Sql.Where("id = ?", id).Updates(&payload)
 	if result.Error != nil {
 		return 0, result.Error
 	}

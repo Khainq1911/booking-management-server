@@ -10,4 +10,5 @@ func SetUp(db *gorm.DB, e *echo.Echo) {
 	NewEmployeeRouter(db, publicRoutes)
 	NewAuthRouter(db, publicRoutes)
 	NewTyperoomRouter(db, publicRoutes)
+	NewRoomRouter(db, publicRoutes)
 }

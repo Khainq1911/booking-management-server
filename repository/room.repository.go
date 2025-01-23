@@ -19,24 +19,21 @@ func NewRoomStorage(db *gorm.DB) domain.RoomStorage {
 	}
 }
 
+
 func (db *roomStorage) ListRoomWithType(ctx context.Context) ([]model.RoomWithType, error) {
 	data := []model.RoomWithType{}
 
-	// Perform the join
 	result := db.Sql.
 		Table("rooms").
-		Select("rooms.*, typerooms.name AS typeroom_name, typerooms.description AS typeroom_description, typerooms.hourly_price, typerooms.daily_price").
-		Joins("LEFT JOIN typerooms ON rooms.type_id = typerooms.id").
+		Select("rooms.*, room_types.name AS typeroom_name, room_types.description AS typeroom_description, room_types.hourly_price, room_types.daily_price, room_types.max_capacity, room_types.standard_capacity").
+		Joins("LEFT JOIN room_types ON rooms.type_id = room_types.id").
 		Find(&data)
 
-	// Handle errors
 	if result.Error != nil {
 		return nil, result.Error
 	}
-
-	// Check if no records were found
 	if result.RowsAffected == 0 {
-		return nil, fmt.Errorf("no records found")
+		return nil, fmt.Errorf("no rooms found with their type information")
 	}
 
 	return data, nil

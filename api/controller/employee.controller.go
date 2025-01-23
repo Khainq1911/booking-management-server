@@ -54,7 +54,6 @@ func (repo *EmployeeController) CreateEmployee(ctx echo.Context) error {
 func (e *EmployeeController) ListEmployee(ctx echo.Context) error {
 	data, err := e.Repo.ListEmployeeRepo(ctx.Request().Context())
 	if err != nil {
-
 		return ctx.JSON(http.StatusInternalServerError, model.Response{
 			StatusCode: http.StatusInternalServerError,
 			Message:    "Failed to retrieve employee list",

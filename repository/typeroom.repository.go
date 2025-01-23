@@ -18,8 +18,8 @@ func NewTyperoomStorage(db *gorm.DB) domain.TyperoomStorage {
 		Sql: db,
 	}
 }
-func (db *typeroomStorage) ListTyperoomRepo(ctx context.Context) ([]model.Typeroom, error) {
-	data := []model.Typeroom{}
+func (db *typeroomStorage) ListTyperoomRepo(ctx context.Context) ([]model.RoomType, error) {
+	data := []model.RoomType{}
 	result := db.Sql.Find(&data)
 	if result.Error != nil {
 		return nil, result.Error

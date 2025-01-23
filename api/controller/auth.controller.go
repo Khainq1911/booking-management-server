@@ -40,7 +40,7 @@ func (a *AuthController) Login(ctx echo.Context) error {
 		})
 	}
 
-	accessToken, err := security.GenerateToken(empData.Username, empData.Role)
+	accessToken, err := security.GenerateToken(empData.Username, empData.Role, empData.Id)
 	if err != nil {
 		ctx.Logger().Errorf("Token generation failed: %v", err)
 		return ctx.JSON(http.StatusInternalServerError, model.Response{

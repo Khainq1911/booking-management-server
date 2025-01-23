@@ -9,12 +9,12 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-type RoomController struct {
-	Rc domain.RoomStorage
+type ServicesController struct {
+	ServicesStorage domain.ServicesStorage
 }
 
-func (u *RoomController) AddRoom(ctx echo.Context) error {
-	req := model.RoomAction{}
+func (controller *ServicesController) CreateItem(ctx echo.Context) error {
+	req := []model.Service{}
 
 	if err := ctx.Bind(&req); err != nil {
 		return ctx.JSON(http.StatusUnprocessableEntity, model.Response{
@@ -24,33 +24,31 @@ func (u *RoomController) AddRoom(ctx echo.Context) error {
 		})
 	}
 
-
-	if err := u.Rc.AddRoomRepo(ctx.Request().Context(), req); err != nil {
+	if err := controller.ServicesStorage.CreateItemRepo(ctx.Request().Context(), req); err != nil {
 		return ctx.JSON(http.StatusInternalServerError, model.Response{
 			StatusCode: http.StatusInternalServerError,
-			Message:    "Error occurred while adding the room",
+			Message:    "Failed to create service item",
 			Data:       nil,
 		})
 	}
-
-	return ctx.JSON(http.StatusCreated, model.Response{
-		StatusCode: http.StatusCreated,
-		Message:    "Room has been successfully created",
-		Data:       req, 
+	return ctx.JSON(http.StatusOK, model.Response{
+		StatusCode: http.StatusOK,
+		Message:    "Service item created successfully",
+		Data:       nil,
 	})
 }
 
-func (u *RoomController) UpdateRoom(ctx echo.Context) error {
+func (controller *ServicesController) UpdateItem(ctx echo.Context) error {
 	id, err := strconv.Atoi(ctx.Param("id"))
 	if err != nil {
 		return ctx.JSON(http.StatusBadRequest, model.Response{
 			StatusCode: http.StatusBadRequest,
-			Message:    "Invalid ID provided",
+			Message:    "Invalid service ID",
 			Data:       nil,
 		})
 	}
+	req := model.UpdateService{}
 
-	req := model.RoomAction{}
 	if err := ctx.Bind(&req); err != nil {
 		return ctx.JSON(http.StatusUnprocessableEntity, model.Response{
 			StatusCode: http.StatusUnprocessableEntity,
@@ -59,11 +57,12 @@ func (u *RoomController) UpdateRoom(ctx echo.Context) error {
 		})
 	}
 
-	rowsAffected, err := u.Rc.UpdateRoomRepo(ctx.Request().Context(), id, req)
+	rowsAffected, err := controller.ServicesStorage.UpdateItemRepo(ctx.Request().Context(), req, id)
+
 	if err != nil {
 		return ctx.JSON(http.StatusInternalServerError, model.Response{
 			StatusCode: http.StatusInternalServerError,
-			Message:    "Error occurred while updating the room",
+			Message:    "Failed to update service item",
 			Data:       nil,
 		})
 	}
@@ -71,30 +70,29 @@ func (u *RoomController) UpdateRoom(ctx echo.Context) error {
 	if rowsAffected == 0 {
 		return ctx.JSON(http.StatusNotFound, model.Response{
 			StatusCode: http.StatusNotFound,
-			Message:    "No room found to update",
+			Message:    "No service item found to update",
 			Data:       nil,
 		})
 	}
-
 	return ctx.JSON(http.StatusOK, model.Response{
 		StatusCode: http.StatusOK,
-		Message:    "Room updated successfully",
-		Data:       req, // Or return updated room data
+		Message:    "Service item updated successfully",
+		Data:       nil,
 	})
 }
 
-func (u *RoomController) ListRoom(ctx echo.Context) error {
-	res, err := u.Rc.ListRoomWithType(ctx.Request().Context())
+func (controller *ServicesController) ListItem(ctx echo.Context) error {
+	res, err := controller.ServicesStorage.ListItemRepo(ctx.Request().Context())
 	if err != nil {
 		return ctx.JSON(http.StatusInternalServerError, model.Response{
 			StatusCode: http.StatusInternalServerError,
-			Message:    "Error occurred while retrieving the room list",
+			Message:    "Failed to retrieve service items",
 			Data:       nil,
 		})
 	}
 	return ctx.JSON(http.StatusOK, model.Response{
 		StatusCode: http.StatusOK,
-		Message:    "Room list retrieved successfully",
+		Message:    "Service items retrieved successfully",
 		Data:       res,
 	})
 }

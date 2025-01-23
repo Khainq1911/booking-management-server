@@ -2,7 +2,7 @@ package model
 
 import "time"
 
-type Typeroom struct {
+type RoomType struct {
 	Id               int       `json:"id" gorm:"column:id;primaryKey;autoIncrement"`
 	Name             string    `json:"name" gorm:"column:name"`
 	Description      string    `json:"description" gorm:"column:description"`
@@ -14,6 +14,7 @@ type Typeroom struct {
 	CreatedAt        time.Time `json:"created_at" gorm:"column:created_at;autoCreateTime"`
 	UpdatedAt        time.Time `json:"updated_at" gorm:"column:updated_at;autoUpdateTime"`
 }
+func (RoomType) TableName() string { return "room_types" }
 
 type CreateTyperoom struct {
 	Name             string    `json:"name" gorm:"column:name"`
@@ -26,4 +27,4 @@ type CreateTyperoom struct {
 	UpdatedAt        time.Time `json:"updated_at" gorm:"column:updated_at;autoUpdateTime"`
 }
 
-func (CreateTyperoom) TableName() string { return "typerooms" }
+func (CreateTyperoom) TableName() string { return "room_types" }

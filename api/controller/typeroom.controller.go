@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"fmt"
 	"manage-system-server/domain"
 	"manage-system-server/model"
 	"net/http"
@@ -84,6 +85,7 @@ func (u *TyperoomController) UpdateTyperoom(ctx echo.Context) error {
 func (u *TyperoomController) ListTyperoom(ctx echo.Context) error {
 	res, err := u.TrC.ListTyperoomRepo(ctx.Request().Context())
 	if err != nil {
+		fmt.Println(err)
 		return ctx.JSON(http.StatusInternalServerError, model.Response{
 			StatusCode: http.StatusInternalServerError,
 			Message:    "Error occurred while retrieving the typeroom list",

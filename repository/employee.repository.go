@@ -18,7 +18,7 @@ func NewEmployeeStorage(db *gorm.DB) domain.EmployeeStorage {
 }
 
 func (db *employeeStorage) CreateEmployeeRepo(ctx context.Context, newEmployee model.Employee) error {
-	result := db.sql.Select("Username", "Email", "Phone", "Password", "Position", "HiredDate", "Dob", "Salary").Create(&newEmployee)
+	result := db.sql.Create(&newEmployee)
 	return result.Error
 }
 

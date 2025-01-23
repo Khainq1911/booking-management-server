@@ -14,6 +14,7 @@ type Room struct {
 	CreatedAt      time.Time `json:"created_at" gorm:"column:created_at;autoCreateTime"`
 	UpdatedAt      time.Time `json:"updated_at" gorm:"column:updated_at;autoUpdateTime"`
 }
+func (Room) TableName() string { return "rooms" }
 
 type RoomAction struct {
 	Name           string    `json:"name" gorm:"column:name"`
@@ -34,5 +35,8 @@ type RoomWithType struct {
 	TyperoomDescription string  `json:"typeroom_description" gorm:"column:typeroom_description"`
 	HourlyPrice         float32 `json:"hourly_price" gorm:"column:hourly_price"`
 	DailyPrice          float32 `json:"daily_price" gorm:"column:daily_price"`
+	MaxCapacity         int     `json:"max_capacity" gorm:"column:max_capacity"`
+	StandardCapacity    int     `json:"standard_capacity" gorm:"column:standard_capacity"`
 }
+
 func (RoomWithType) TableName() string { return "rooms" }

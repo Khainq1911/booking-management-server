@@ -28,3 +28,4 @@ func (db *BookingServiceStorage) ListBookingServiceRepo(ctx context.Context, boo
 	result := db.Sql.Where("booking_id = ?", bookingId).Find(&data)
 	return data, result.Error
 }
+

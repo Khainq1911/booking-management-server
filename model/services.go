@@ -7,6 +7,7 @@ type Service struct {
 	Name      string    `json:"name" gorm:"column:name"`
 	Quantity  int       `json:"quantity" gorm:"column:quantity"`
 	Price     float32   `json:"price" gorm:"column:price"`
+	ImgUrl    string    `json:"img_url" gorm:"column:img_url"`
 	CreatedAt time.Time `json:"created_at" gorm:"column:created_at;autoCreateTime"`
 	UpdatedAt time.Time `json:"updated_at" gorm:"column:updated_at;autoUpdateTime"`
 }

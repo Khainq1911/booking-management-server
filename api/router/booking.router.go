@@ -14,5 +14,6 @@ func NewBookingRouter(db *gorm.DB, echo *echo.Group) {
 		BookingStorage: dbConn,
 	}
 	echo.GET("/booking", controller.ListBooking)
+	echo.GET("/booking/:room_id", controller.GetBooking)
 	echo.POST("/booking", controller.CreateBooking)
 }

@@ -9,11 +9,12 @@ type Room struct {
 	Floor          int       `json:"floor" gorm:"column:floor"`
 	CleaningStatus bool      `json:"cleaning_status" gorm:"column:cleaning_status"`
 	BookingStatus  bool      `json:"booking_status" gorm:"column:booking_status"`
-	TypeId         int       `json:"type_id" gorm:"type_id"`
+	TypeId         int       `json:"type_id" gorm:"column:type_id"`
 	ImgUrl         string    `json:"img_url" gorm:"column:img_url"`
 	CreatedAt      time.Time `json:"created_at" gorm:"column:created_at;autoCreateTime"`
 	UpdatedAt      time.Time `json:"updated_at" gorm:"column:updated_at;autoUpdateTime"`
 }
+
 func (Room) TableName() string { return "rooms" }
 
 type RoomAction struct {

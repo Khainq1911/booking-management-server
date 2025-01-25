@@ -20,3 +20,23 @@ type RoomStatusUpdate struct {
 }
 
 func (RoomStatusUpdate) TableName() string { return "rooms" }
+
+type BookingWithCustomerAndRoom struct {
+	Booking
+	RoomId           int       `json:"room_id" gorm:"column:room_id"`
+	RoomName         string    `json:"room_name" gorm:"column:room_name"`
+	RoomDescription  string    `json:"room_description" gorm:"column:room_description"`
+	RoomFloor        int       `json:"room_floor" gorm:"column:room_floor"`
+	ImgUrl           string    `json:"img_url" gorm:"column:img_url"`
+	TyperoomName     string    `json:"typeroom_name" gorm:"column:typeroom_name"`
+	HourlyPrice      float32   `json:"hourly_price" gorm:"column:hourly_price"`
+	DailyPrice       float32   `json:"daily_price" gorm:"column:daily_price"`
+	MaxCapacity      int       `json:"max_capacity" gorm:"column:max_capacity"`
+	StandardCapacity int       `json:"standard_capacity" gorm:"column:standard_capacity"`
+	CustomerName     string    `json:"customer_name" gorm:"column:customer_name"`
+	CustomerDob      time.Time `json:"customer_dob" gorm:"column:customer_dob"`
+	CustomerEmail    string    `json:"customer_email" gorm:"column:customer_email"`
+	CustomerPhone    string    `json:"customer_phone" gorm:"column:customer_phone"`
+}
+
+func (BookingWithCustomerAndRoom) TableName() string { return "bookings" }

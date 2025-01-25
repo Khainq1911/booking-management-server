@@ -14,4 +14,5 @@ func SetUp(db *gorm.DB, e *echo.Echo) {
 	NewCustomerRouter(db, publicRoutes)
 	NewBookingRouter(db, publicRoutes)
 	NewServicesRouter(db, publicRoutes)
+	NewPaymentRouter(db, publicRoutes)
 }

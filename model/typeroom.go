@@ -14,7 +14,7 @@ type RoomType struct {
 	CreatedAt        time.Time `json:"created_at" gorm:"column:created_at;autoCreateTime"`
 	UpdatedAt        time.Time `json:"updated_at" gorm:"column:updated_at;autoUpdateTime"`
 }
-func (RoomType) TableName() string { return "room_types" }
+func (RoomType) TableName() string { return "typerooms" }
 
 type CreateTyperoom struct {
 	Name             string    `json:"name" gorm:"column:name"`
@@ -27,4 +27,4 @@ type CreateTyperoom struct {
 	UpdatedAt        time.Time `json:"updated_at" gorm:"column:updated_at;autoUpdateTime"`
 }
 
-func (CreateTyperoom) TableName() string { return "room_types" }
+func (CreateTyperoom) TableName() string { return "typerooms" }

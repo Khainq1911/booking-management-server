@@ -24,8 +24,8 @@ func (db *roomStorage) ListRoomWithType(ctx context.Context) ([]model.RoomWithTy
 
 	result := db.Sql.
 		Table("rooms").
-		Select("rooms.*, room_types.name AS typeroom_name, room_types.description AS typeroom_description, room_types.hourly_price, room_types.daily_price, room_types.max_capacity, room_types.standard_capacity").
-		Joins("LEFT JOIN room_types ON rooms.type_id = room_types.id").
+		Select("rooms.*, typerooms.name AS typeroom_name, typerooms.description AS typeroom_description, typerooms.hourly_price, typerooms.daily_price, typerooms.max_capacity, typerooms.standard_capacity").
+		Joins("LEFT JOIN typerooms ON rooms.type_id = typerooms.id").
 		Find(&data)
 
 	if result.Error != nil {

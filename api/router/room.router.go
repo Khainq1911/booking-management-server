@@ -13,7 +13,8 @@ func NewRoomRouter(db *gorm.DB, echo *echo.Group) {
 	rc := &controller.RoomController{
 		Rc: dbConn,
 	}
-	echo.GET("/room", rc.ListRoom)
+	echo.GET("/room/list", rc.ListRoom)
+	echo.GET("/room", rc.QueryRoom)
 	echo.POST("/room", rc.AddRoom)
 	echo.PUT("/room/:id", rc.UpdateRoom)
 }

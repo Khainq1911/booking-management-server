@@ -79,7 +79,7 @@ func (u *RoomController) UpdateRoom(ctx echo.Context) error {
 	return ctx.JSON(http.StatusOK, model.Response{
 		StatusCode: http.StatusOK,
 		Message:    "Room updated successfully",
-		Data:       req, // Or return updated room data
+		Data:       req, 
 	})
 }
 
@@ -98,3 +98,23 @@ func (u *RoomController) ListRoom(ctx echo.Context) error {
 		Data:       res,
 	})
 }
+
+func(controller *RoomController) QueryRoom(ctx echo.Context) error{
+	query := ctx.QueryParam("q")
+
+	data, err := controller.Rc.QueryRoomRepo(ctx.Request().Context(), query)
+	if err != nil{
+		return ctx.JSON(http.StatusInternalServerError, model.Response{
+			StatusCode: http.StatusInternalServerError,
+			Message:    "Error occurred while retrieving the room list",
+			Data:       nil,
+		})
+	}
+
+	return ctx.JSON(http.StatusOK, model.Response{
+		StatusCode: http.StatusOK,
+		Message:    "Room updated successfully",
+		Data:       data, 
+	})
+}
+

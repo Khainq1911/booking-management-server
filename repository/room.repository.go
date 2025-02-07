@@ -19,7 +19,6 @@ func NewRoomStorage(db *gorm.DB) domain.RoomStorage {
 	}
 }
 
-
 func (db *roomStorage) ListRoomWithType(ctx context.Context) ([]model.RoomWithType, error) {
 	data := []model.RoomWithType{}
 
@@ -53,4 +52,16 @@ func (db *roomStorage) UpdateRoomRepo(ctx context.Context, id int, payload model
 	}
 
 	return result.RowsAffected, nil
+}
+
+func (db *roomStorage) QueryRoomRepo(ctx context.Context, query string) ([]model.Room, error) {
+	var rooms []model.Room
+	result := db.Sql.WithContext(ctx).
+		Where("LOWER(name) LIKE LOWER(?)", "%"+query+"%").
+		Find(&rooms)
+
+	if result.Error != nil {
+		return nil, result.Error
+	}
+	return rooms, nil
 }

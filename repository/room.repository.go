@@ -54,10 +54,12 @@ func (db *roomStorage) UpdateRoomRepo(ctx context.Context, id int, payload model
 	return result.RowsAffected, nil
 }
 
-func (db *roomStorage) QueryRoomRepo(ctx context.Context, query string) ([]model.Room, error) {
-	var rooms []model.Room
-	result := db.Sql.WithContext(ctx).
-		Where("LOWER(name) LIKE LOWER(?)", "%"+query+"%").
+func (db *roomStorage) QueryRoomRepo(ctx context.Context, query string) ([]model.RoomWithType, error) {
+	var rooms []model.RoomWithType
+	result := db.Sql.WithContext(ctx).Table("rooms").
+		Select("rooms.*, typerooms.name AS typeroom_name, typerooms.description AS typeroom_description, typerooms.hourly_price, typerooms.daily_price, typerooms.max_capacity, typerooms.standard_capacity").
+		Joins("LEFT JOIN typerooms ON rooms.type_id = typerooms.id").
+		Where("LOWER(rooms.name) LIKE LOWER(?)", "%"+query+"%").
 		Find(&rooms)
 
 	if result.Error != nil {

@@ -15,6 +15,5 @@ func NewShiftsRouter(db *gorm.DB, echo *echo.Group) {
 	}
 	echo.POST("/shifts", controller.AddShifts)
 	echo.GET("/shifts/list", controller.ListShifts)
-	echo.GET("/shifts", controller.ListShiftsById)
 	echo.PUT("/shifts/:id", controller.UpdateShift)
 }

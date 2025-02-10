@@ -6,8 +6,7 @@ import (
 )
 
 type ShiftStorage interface {
-	AddShiftsRepo(ctx context.Context, payload []model.Shift) error
+	AddShiftsRepo(ctx context.Context, payload model.Shift) error
 	ListShiftsRepo(ctx context.Context) ([]model.Shift, error)
-	ListShiftsById(ctx context.Context, employeeId int) ([]model.Shift, error)
 	UpdateShiftsRepo(ctx context.Context, shift_id int, payload model.UpdateShift) error
 }

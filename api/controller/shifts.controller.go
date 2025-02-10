@@ -14,7 +14,7 @@ type ShiftsController struct {
 }
 
 func (controller *ShiftsController) AddShifts(ctx echo.Context) error {
-	var req []model.Shift
+	var req model.Shift
 
 	if err := ctx.Bind(&req); err != nil {
 		return ctx.JSON(http.StatusUnprocessableEntity, model.Response{
@@ -45,32 +45,6 @@ func (controller *ShiftsController) ListShifts(ctx echo.Context) error {
 		return ctx.JSON(http.StatusInternalServerError, model.Response{
 			StatusCode: http.StatusInternalServerError,
 			Message:    "Failed to retrieve shifts",
-			Data:       nil,
-		})
-	}
-
-	return ctx.JSON(http.StatusOK, model.Response{
-		StatusCode: http.StatusOK,
-		Message:    "Shifts retrieved successfully",
-		Data:       res,
-	})
-}
-
-func (controller *ShiftsController) ListShiftsById(ctx echo.Context) error {
-	employeeId, err := strconv.Atoi(ctx.QueryParam("employee_id"))
-	if err != nil {
-		return ctx.JSON(http.StatusBadRequest, model.Response{
-			StatusCode: http.StatusBadRequest,
-			Message:    "Invalid employee ID provided",
-			Data:       nil,
-		})
-	}
-
-	res, err := controller.ShiftStorage.ListShiftsById(ctx.Request().Context(), employeeId)
-	if err != nil {
-		return ctx.JSON(http.StatusInternalServerError, model.Response{
-			StatusCode: http.StatusInternalServerError,
-			Message:    "Failed to retrieve shifts for the specified employee",
 			Data:       nil,
 		})
 	}

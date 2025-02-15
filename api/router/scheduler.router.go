@@ -14,7 +14,7 @@ func NewSchedulerRouter(db *gorm.DB, echo *echo.Group) {
 		SchedulerStorage: dbConn,
 	}
 	echo.POST("/scheduler", controller.AddScheduler)
-	echo.PUT("/scheduler/:id", controller.UpdateScheduler)
+	echo.PUT("/scheduler/update/:id", controller.UpdateScheduler)
 	echo.GET("/scheduler", controller.ListScheduler)
 	echo.GET("/scheduler/:id", controller.ListSchedulerByEmpId)
 }

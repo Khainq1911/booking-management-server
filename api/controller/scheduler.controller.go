@@ -19,7 +19,7 @@ func (controller *SchedulerController) AddScheduler(ctx echo.Context) error {
 	if err := ctx.Bind(&req); err != nil {
 		return ctx.JSON(http.StatusUnprocessableEntity, model.Response{
 			StatusCode: http.StatusUnprocessableEntity,
-			Message:    "Unable to process request payload",
+			Message:    "Invalid request format. Please check your input data.",
 			Data:       nil,
 		})
 	}
@@ -27,13 +27,13 @@ func (controller *SchedulerController) AddScheduler(ctx echo.Context) error {
 	if err := controller.SchedulerStorage.AddScheduler(ctx.Request().Context(), req); err != nil {
 		return ctx.JSON(http.StatusInternalServerError, model.Response{
 			StatusCode: http.StatusInternalServerError,
-			Message:    "Error occurred while adding the scheduler",
+			Message:    "Failed to add scheduler. Please try again later.",
 			Data:       nil,
 		})
 	}
 	return ctx.JSON(http.StatusCreated, model.Response{
 		StatusCode: http.StatusCreated,
-		Message:    "Scheduler has been successfully created",
+		Message:    "Scheduler created successfully.",
 		Data:       nil,
 	})
 }
@@ -43,7 +43,7 @@ func (controller *SchedulerController) UpdateScheduler(ctx echo.Context) error {
 	if err != nil {
 		return ctx.JSON(http.StatusBadRequest, model.Response{
 			StatusCode: http.StatusBadRequest,
-			Message:    "Invalid ID provided",
+			Message:    "Invalid scheduler ID. Please provide a valid ID.",
 			Data:       nil,
 		})
 	}
@@ -52,7 +52,7 @@ func (controller *SchedulerController) UpdateScheduler(ctx echo.Context) error {
 	if err := ctx.Bind(&req); err != nil {
 		return ctx.JSON(http.StatusUnprocessableEntity, model.Response{
 			StatusCode: http.StatusUnprocessableEntity,
-			Message:    "Unable to process request payload",
+			Message:    "Invalid request format. Please check your input data.",
 			Data:       nil,
 		})
 	}
@@ -60,13 +60,13 @@ func (controller *SchedulerController) UpdateScheduler(ctx echo.Context) error {
 	if err := controller.SchedulerStorage.UpdateScheduler(ctx.Request().Context(), id, req); err != nil {
 		return ctx.JSON(http.StatusInternalServerError, model.Response{
 			StatusCode: http.StatusInternalServerError,
-			Message:    "Error occurred while updating the scheduler",
+			Message:    "Failed to update scheduler. Please try again later.",
 			Data:       nil,
 		})
 	}
 	return ctx.JSON(http.StatusOK, model.Response{
 		StatusCode: http.StatusOK,
-		Message:    "Room updated successfully",
+		Message:    "Scheduler updated successfully.",
 		Data:       nil,
 	})
 }
@@ -76,13 +76,13 @@ func (controller *SchedulerController) ListScheduler(ctx echo.Context) error {
 	if err != nil {
 		return ctx.JSON(http.StatusInternalServerError, model.Response{
 			StatusCode: http.StatusInternalServerError,
-			Message:    "Error occurred while retrieving the scheduler list",
+			Message:    "Failed to retrieve scheduler list. Please try again later.",
 			Data:       nil,
 		})
 	}
 	return ctx.JSON(http.StatusOK, model.Response{
 		StatusCode: http.StatusOK,
-		Message:    "Scheduler list retrieved successfully",
+		Message:    "Scheduler list retrieved successfully.",
 		Data:       data,
 	})
 }
@@ -92,7 +92,7 @@ func (controller *SchedulerController) ListSchedulerByEmpId(ctx echo.Context) er
 	if err != nil {
 		return ctx.JSON(http.StatusBadRequest, model.Response{
 			StatusCode: http.StatusBadRequest,
-			Message:    "Invalid ID provided",
+			Message:    "Invalid employee ID. Please provide a valid ID.",
 			Data:       nil,
 		})
 	}
@@ -101,13 +101,13 @@ func (controller *SchedulerController) ListSchedulerByEmpId(ctx echo.Context) er
 	if err != nil {
 		return ctx.JSON(http.StatusInternalServerError, model.Response{
 			StatusCode: http.StatusInternalServerError,
-			Message:    "Error occurred while retrieving the scheduler list",
+			Message:    "Failed to retrieve scheduler list for the employee. Please try again later.",
 			Data:       nil,
 		})
 	}
 	return ctx.JSON(http.StatusOK, model.Response{
 		StatusCode: http.StatusOK,
-		Message:    "Scheduler list retrieved successfully",
+		Message:    "Scheduler list for the employee retrieved successfully.",
 		Data:       data,
 	})
 }

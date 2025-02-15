@@ -28,6 +28,7 @@ func (db *SchedulerStorage) UpdateScheduler(ctx context.Context, id int, payload
 	return result.Error
 }
 
+
 func (db *SchedulerStorage) ListScheduler(ctx context.Context) ([]model.GetScheduler, error) {
 	data := []model.GetScheduler{}
 	result := db.Sql.
@@ -43,5 +44,6 @@ func (db *SchedulerStorage) ListSchedulerByEmpId(ctx context.Context, empId int)
 	Select("shift_assignments.*, employees.username, employees.phone, shifts.start_time, shifts.end_time").
 	Joins("left join shifts on shifts.id = shift_assignments.shift_id left join employees on employees.id = shift_assignments.employee_id").
 	Find(&data)
+
 	return data, result.Error
 }

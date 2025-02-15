@@ -10,4 +10,5 @@ type SchedulerStorage interface {
 	UpdateScheduler(ctx context.Context, id int, payload model.UpdateShiftAssignment) error
 	ListScheduler(ctx context.Context) ([]model.GetScheduler, error)
 	ListSchedulerByEmpId(ctx context.Context, empId int) ([]model.GetScheduler, error)
+
 }

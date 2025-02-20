@@ -24,7 +24,6 @@ func (u *RoomController) AddRoom(ctx echo.Context) error {
 		})
 	}
 
-
 	if err := u.Rc.AddRoomRepo(ctx.Request().Context(), req); err != nil {
 		return ctx.JSON(http.StatusInternalServerError, model.Response{
 			StatusCode: http.StatusInternalServerError,
@@ -36,7 +35,7 @@ func (u *RoomController) AddRoom(ctx echo.Context) error {
 	return ctx.JSON(http.StatusCreated, model.Response{
 		StatusCode: http.StatusCreated,
 		Message:    "Room has been successfully created",
-		Data:       req, 
+		Data:       req,
 	})
 }
 
@@ -59,8 +58,7 @@ func (u *RoomController) UpdateRoom(ctx echo.Context) error {
 		})
 	}
 
-	rowsAffected, err := u.Rc.UpdateRoomRepo(ctx.Request().Context(), id, req)
-	if err != nil {
+	if err := u.Rc.UpdateRoomRepo(ctx.Request().Context(), id, req); err != nil {
 		return ctx.JSON(http.StatusInternalServerError, model.Response{
 			StatusCode: http.StatusInternalServerError,
 			Message:    "Error occurred while updating the room",
@@ -68,18 +66,10 @@ func (u *RoomController) UpdateRoom(ctx echo.Context) error {
 		})
 	}
 
-	if rowsAffected == 0 {
-		return ctx.JSON(http.StatusNotFound, model.Response{
-			StatusCode: http.StatusNotFound,
-			Message:    "No room found to update",
-			Data:       nil,
-		})
-	}
-
 	return ctx.JSON(http.StatusOK, model.Response{
 		StatusCode: http.StatusOK,
 		Message:    "Room updated successfully",
-		Data:       req, 
+		Data:       nil,
 	})
 }
 
@@ -99,11 +89,12 @@ func (u *RoomController) ListRoom(ctx echo.Context) error {
 	})
 }
 
-func(controller *RoomController) QueryRoom(ctx echo.Context) error{
+func (controller *RoomController) QueryRoom(ctx echo.Context) error {
 	query := ctx.QueryParam("q")
+	status := ctx.QueryParam("booking_status")
 
-	data, err := controller.Rc.QueryRoomRepo(ctx.Request().Context(), query)
-	if err != nil{
+	data, err := controller.Rc.QueryRoomRepo(ctx.Request().Context(), query, status)
+	if err != nil {
 		return ctx.JSON(http.StatusInternalServerError, model.Response{
 			StatusCode: http.StatusInternalServerError,
 			Message:    "Error occurred while retrieving the room list",
@@ -114,7 +105,6 @@ func(controller *RoomController) QueryRoom(ctx echo.Context) error{
 	return ctx.JSON(http.StatusOK, model.Response{
 		StatusCode: http.StatusOK,
 		Message:    "Room updated successfully",
-		Data:       data, 
+		Data:       data,
 	})
 }
-

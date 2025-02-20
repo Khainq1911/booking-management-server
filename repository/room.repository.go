@@ -45,25 +45,24 @@ func (db *roomStorage) AddRoomRepo(ctx context.Context, payload model.RoomAction
 	return nil
 }
 
-func (db *roomStorage) UpdateRoomRepo(ctx context.Context, id int, payload model.RoomAction) (int64, error) {
+func (db *roomStorage) UpdateRoomRepo(ctx context.Context, id int, payload model.RoomAction) error {
 	result := db.Sql.Where("id = ?", id).Updates(&payload)
-	if result.Error != nil {
-		return 0, result.Error
-	}
-
-	return result.RowsAffected, nil
+	return result.Error
 }
 
-func (db *roomStorage) QueryRoomRepo(ctx context.Context, query string) ([]model.RoomWithType, error) {
+func (db *roomStorage) QueryRoomRepo(ctx context.Context, query string, roomStatus string) ([]model.RoomWithType, error) {
 	var rooms []model.RoomWithType
 	result := db.Sql.WithContext(ctx).Table("rooms").
 		Select("rooms.*, typerooms.name AS typeroom_name, typerooms.description AS typeroom_description, typerooms.hourly_price, typerooms.daily_price, typerooms.max_capacity, typerooms.standard_capacity").
 		Joins("LEFT JOIN typerooms ON rooms.type_id = typerooms.id").
-		Where("LOWER(rooms.name) LIKE LOWER(?)", "%"+query+"%").
-		Find(&rooms)
+		Where("LOWER(rooms.name) LIKE LOWER(?)", "%"+query+"%")
 
-	if result.Error != nil {
-		return nil, result.Error
+	if roomStatus != "" {
+		result = result.Where("rooms.booking_status = ?", roomStatus)
+	}
+
+	if err := result.Find(&rooms).Error; err != nil {
+		return nil, err
 	}
 	return rooms, nil
 }

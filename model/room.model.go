@@ -18,13 +18,7 @@ type Room struct {
 func (Room) TableName() string { return "rooms" }
 
 type RoomAction struct {
-	Name           string    `json:"name" gorm:"column:name"`
-	Description    string    `json:"description" gorm:"column:description"`
-	Floor          int       `json:"floor" gorm:"column:floor"`
-	CleaningStatus bool      `json:"cleaning_status" gorm:"column:cleaning_status"`
-	BookingStatus  bool      `json:"booking_status" gorm:"column:booking_status"`
-	TypeId         int       `json:"type_id" gorm:"type_id"`
-	ImgUrl         string    `json:"img_url" gorm:"column:img_url"`
+	CleaningStatus *bool      `json:"cleaning_status" gorm:"column:cleaning_status"`
 	UpdatedAt      time.Time `json:"updated_at" gorm:"column:updated_at;autoUpdateTime"`
 }
 

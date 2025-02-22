@@ -40,7 +40,16 @@ func (db *employeeStorage) UpdateEmployRepo(ctx context.Context, id int, updateD
 	return nil
 }
 
-func (db *employeeStorage) GetEmployeeById(ctx context.Context, id int) (model.Employee, error){
+func (db *employeeStorage) QueryEmployeeRepo(ctx context.Context, query string) ([]model.Employee, error) {
+    var employee []model.Employee
+    result := db.sql.
+        Where("username ILIKE ?", "%"+query+"%").
+        Or("phone ILIKE ?", "%"+query+"%").
+        Find(&employee)
+    return employee, result.Error
+}
+
+func (db *employeeStorage) GetEmployeeById(ctx context.Context, id int) (model.Employee, error) {
 	employee := model.Employee{}
 	retult := db.sql.Where("id=?", id).First(&employee)
 	return employee, retult.Error

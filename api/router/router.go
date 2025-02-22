@@ -1,13 +1,16 @@
 package router
 
 import (
+	"manage-system-server/security"
+
 	"github.com/labstack/echo/v4"
 	"gorm.io/gorm"
 )
 
 func SetUp(db *gorm.DB, e *echo.Echo) {
 	publicRoutes := e.Group("")
-	NewEmployeeRouter(db, publicRoutes)
+	privateRoutes := e.Group("", security.AdminMiddleware)
+	NewEmployeeRouter(db, privateRoutes)
 	NewAuthRouter(db, publicRoutes)
 	NewTyperoomRouter(db, publicRoutes)
 	NewRoomRouter(db, publicRoutes)

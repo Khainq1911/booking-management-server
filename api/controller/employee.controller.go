@@ -101,3 +101,22 @@ func (e *EmployeeController) UpdateEmployee(ctx echo.Context) error {
 		Data:       nil,
 	})
 }
+
+func(controller *EmployeeController) QueryEmployee(ctx echo.Context) error{
+	q := ctx.QueryParam("q")
+
+	data, err := controller.Repo.QueryEmployeeRepo(ctx.Request().Context(), q)
+	if err != nil {
+		return ctx.JSON(http.StatusInternalServerError, model.Response{
+			StatusCode: http.StatusInternalServerError,
+			Message:    "Failed to retrieve employee list",
+			Data:       nil,
+		})
+	}
+
+	return ctx.JSON(http.StatusOK, model.Response{
+		StatusCode: http.StatusOK,
+		Message:    "Employee list retrieved successfully",
+		Data:       data,
+	})
+}

@@ -14,6 +14,7 @@ func NewEmployeeRouter(db *gorm.DB, echo *echo.Group) {
 		Repo: dbConn,
 	}
 	echo.GET("/employee", ec.ListEmployee)
+	echo.GET("/employee/search", ec.QueryEmployee)
 	echo.POST("/employee", ec.CreateEmployee)
 	echo.PUT("/employee/:id", ec.UpdateEmployee)
 }

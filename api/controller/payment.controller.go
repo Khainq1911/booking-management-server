@@ -39,6 +39,23 @@ func (controller *PaymentController) AddPayment(ctx echo.Context) error {
 	})
 }
 
+func (controller *PaymentController) ListPayment(ctx echo.Context) error {
+	data, err := controller.PaymentStorage.ListPayment(ctx.Request().Context())
+	if err != nil {
+		return ctx.JSON(http.StatusInternalServerError, model.Response{
+			StatusCode: http.StatusInternalServerError,
+			Message:    "Failed to get the payment",
+			Data:       nil,
+		})
+	}
+
+	return ctx.JSON(http.StatusOK, model.Response{
+		StatusCode: http.StatusOK,
+		Message:    "Payment is gotten successfully",
+		Data:       data,
+	})
+}
+
 func (controller *PaymentController) GetPayment(ctx echo.Context) error {
 	booking_id, err := strconv.Atoi(ctx.Param("booking_id"))
 	if err != nil {
@@ -74,7 +91,7 @@ func (controller *PaymentController) UpdatePayment(ctx echo.Context) error {
 			Data:       nil,
 		})
 	}
-	
+
 	room_id, err := strconv.Atoi(ctx.Param("room_id"))
 	if err != nil {
 		return ctx.JSON(http.StatusBadRequest, model.Response{

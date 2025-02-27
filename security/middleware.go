@@ -1,7 +1,6 @@
 package security
 
 import (
-	"fmt"
 	"net/http"
 	"os"
 	"strings"
@@ -36,7 +35,6 @@ func AdminMiddleware(next echo.HandlerFunc) echo.HandlerFunc {
 			return ctx.JSON(http.StatusForbidden, map[string]string{"error": "access denied"})
 		}
 
-		fmt.Println("Admin Claims:", claims)
 		return next(ctx)
 	}
 }

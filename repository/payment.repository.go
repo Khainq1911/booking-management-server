@@ -18,6 +18,23 @@ func NewPaymentStorage(db *gorm.DB) domain.PaymentStorage {
 	}
 }
 
+func (db *paymentStorage) ListPayment(ctx context.Context) ([]model.ListPayment, error) {
+	data := []model.ListPayment{}
+
+	err := db.Sql.Table("payments").
+		Order("payments.updated_at DESC").
+		Select("payments.*, bookings.check_in_time, bookings.check_out_time, bookings.total_price, " +
+			"employees.username as employee_name, employees.phone as employee_phone, " +
+			"customers.name as customer_name, customers.phone as customer_phone, " +
+			"rooms.name as room_name").
+		Joins("JOIN bookings ON payments.booking_id = bookings.id").
+		Joins("JOIN employees ON employees.id = bookings.employee_id").
+		Joins("JOIN customers ON customers.id = bookings.guest_id").
+		Joins("JOIN rooms ON rooms.id = bookings.room_id").
+		Find(&data).Error
+	return data, err
+}
+
 func (db *paymentStorage) AddPaymentRepo(ctx context.Context, payload model.Payment) error {
 	err := db.Sql.Create(&payload).Error
 	return err

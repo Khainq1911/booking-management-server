@@ -11,4 +11,5 @@ type PaymentStorage interface {
 	UpdateBookingRepo(ctx context.Context, id int) error
 	GetPaymentByBookingIdRepo(ctx context.Context, bookingId int) (model.Payment, error)
 	UpdateRoomRepo(ctx context.Context, id int) error
+	ListPayment(ctx context.Context) ([]model.ListPayment, error)
 }

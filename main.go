@@ -45,8 +45,6 @@ func main() {
 	if err != nil {
 		log.Fatalf("Failed to connect to the database: %v", err)
 	}
-	fmt.Println("Connected to the database successfully:", db)
-
 	router.SetUp(db, e)
 
 	e.GET("/", func(c echo.Context) error {

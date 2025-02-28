@@ -16,4 +16,5 @@ func NewPaymentRouter(db *gorm.DB, echo *echo.Group) {
 	echo.POST("payment", PaymentController.AddPayment)
 	echo.PUT("payment/:booking_id/:room_id", PaymentController.UpdatePayment)
 	echo.GET("payment/:booking_id", PaymentController.GetPayment)
+	echo.GET("payment", PaymentController.ListPayment)
 }
